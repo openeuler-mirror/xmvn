@@ -1,0 +1,46 @@
+From 19874894ff867819344b27fb5b718a0084f65b41 Mon Sep 17 00:00:00 2001
+From: maminjie <maminjie1@huawei.com>
+Date: Mon, 14 Sep 2020 12:01:02 +0800
+Subject: [PATCH] Port to Gradle 4.4.1
+
+---
+ .../xmvn/connector/gradle/GradleResolver.java            | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/xmvn-connector-gradle/src/main/java/org/fedoraproject/xmvn/connector/gradle/GradleResolver.java b/xmvn-connector-gradle/src/main/java/org/fedoraproject/xmvn/connector/gradle/GradleResolver.java
+index 9e1a247..ba4a879 100644
+--- a/xmvn-connector-gradle/src/main/java/org/fedoraproject/xmvn/connector/gradle/GradleResolver.java
++++ b/xmvn-connector-gradle/src/main/java/org/fedoraproject/xmvn/connector/gradle/GradleResolver.java
+@@ -35,6 +35,7 @@ import org.gradle.api.internal.artifacts.repositories.AbstractArtifactRepository
+ import org.gradle.api.internal.artifacts.repositories.ResolutionAwareRepository;
+ import org.gradle.api.internal.artifacts.repositories.resolver.MetadataFetchingCost;
+ import org.gradle.api.internal.component.ArtifactType;
++import org.gradle.internal.component.external.model.ModuleDependencyMetadata;
+ import org.gradle.internal.component.external.model.DefaultModuleComponentArtifactMetadata;
+ import org.gradle.internal.component.external.model.DefaultMutableMavenModuleResolveMetadata;
+ import org.gradle.internal.component.external.model.FixedComponentArtifacts;
+@@ -156,7 +157,7 @@ public class GradleResolver
+     }
+ 
+     @Override
+-    public void listModuleVersions( DependencyMetadata arg0, BuildableModuleVersionListingResolveResult arg1 )
++    public void listModuleVersions(ModuleDependencyMetadata dependency, BuildableModuleVersionListingResolveResult result)
+     {
+         logger.debug( "listModuleVersions() called, but it is NOT IMPLEMENTED" );
+     }
+@@ -288,6 +289,12 @@ public class GradleResolver
+         DefaultExternalResourceMetaData metadata = new DefaultExternalResourceMetaData( pomPath.toUri(), 0, 0 );
+         return fileRepository.resource( pomPath.toFile(), pomPath.toUri(), metadata );
+     }
++    
++    @Override
++    public LocallyAvailableExternalResource getMetaDataArtifact(ModuleDependencyMetadata dependencyMetadata, ArtifactType artifactType) 
++    {
++        throw new UnsupportedOperationException();
++    }
+ 
+     @Override
+     public ComponentMetadataSupplier createMetadataSupplier()
+-- 
+2.23.0
+
