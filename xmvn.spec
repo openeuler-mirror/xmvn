@@ -2,7 +2,7 @@
 
 Name:           xmvn
 Version:        3.0.0
-Release:        23
+Release:        24
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 URL:            https://fedora-java.github.io/xmvn/
@@ -159,6 +159,11 @@ mver=$(sed -n '/<mavenVersion>/{s/.*>\(.*\)<.*/\1/;p}' \
 install -d target/dependency/
 cp -aL ${maven_home} target/dependency/apache-maven-$mver
 
+sed -i 's/CONFIG\/2.0.0/METADATA\/3.0.0/g' xmvn-tools/xmvn-install/src/test/resources/test-pkg.xml
+sed -i 's/CONFIG\/2.0.0/METADATA\/3.0.0/g' xmvn-tools/xmvn-install/src/test/resources/test-pkg-resolved.xml
+sed -i 's/CONFIG\/2.0.0/METADATA\/3.0.0/g' xmvn-tools/xmvn-install/src/test/resources/test-pkg-main.xml
+sed -i 's/CONFIG\/2.0.0/METADATA\/3.0.0/g' xmvn-tools/xmvn-install/src/test/resources/test-pkg-sub.xml
+
 %build
 %mvn_build -s -j
 
@@ -249,6 +254,9 @@ cp -P ${maven_home}/bin/m2.conf %{buildroot}%{_datadir}/xmvn/bin/
 %doc NOTICE
 
 %changelog
+* Mon Feb 28 2022 Ge Wang <wangge20@huawei.com> 3.0.0-24
+- Modify tests file due to maven upgrade to version 3.6.3
+
 * Mon Sep 14 2020 maminjie <maminjie1@huawei.com> 3.0.0-23
 - Port to Gradle 4.4.1
 
