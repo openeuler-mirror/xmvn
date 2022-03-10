@@ -1,8 +1,9 @@
 %global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^osgi\\($
+%define with_gradle441 0
 
 Name:           xmvn
 Version:        3.0.0
-Release:        24
+Release:        25
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 URL:            https://fedora-java.github.io/xmvn/
@@ -16,7 +17,9 @@ Patch0003:      0001-Support-setting-Xdoclint-none-in-m-javadoc-p-3.0.0.patch
 Patch0004:      0001-Fix-configuration-of-aliased-plugins.patch
 Patch0005:      0001-Don-t-use-JAXB-for-converting-bytes-to-hex-string.patch
 Patch0006:      0001-Use-apache-commons-compress-for-manifest-injection-a.patch
+%if %{with_gradle441}
 Patch0007:      0001-Port-to-Gradle-4.4.1.patch
+%endif
 
 BuildRequires:  maven >= 3.5.0 maven-local apache-commons-compress beust-jcommander cglib
 BuildRequires:  maven-dependency-plugin maven-plugin-build-helper maven-assembly-plugin
@@ -254,6 +257,9 @@ cp -P ${maven_home}/bin/m2.conf %{buildroot}%{_datadir}/xmvn/bin/
 %doc NOTICE
 
 %changelog
+* Thu Mar 10 2022 lvxiaoqian <xiaoqian@nj.iscas.ac.cn> - 1:4.12-14
+- use 0001-Port-to-Gradle-4.4.1.patch with gradle 4.4.1
+
 * Mon Feb 28 2022 Ge Wang <wangge20@huawei.com> 3.0.0-24
 - Modify tests file due to maven upgrade to version 3.6.3
 
